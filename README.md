@@ -1,6 +1,6 @@
-# 🎬 Agente Inteligente de Recomendação e Consulta de Filmes (RAG + n8n)
+# 🎬 Luz & Cena - Agente Inteligente de Recomendação de Filmes (RAG + n8n)
 
-Um agente inteligente de Inteligência Artificial Generativa capaz de consultar um catálogo de filmes em tempo real e responder a dúvidas dos usuários em linguagem natural, utilizando arquitetura **RAG (Retrieval-Augmented Generation)** no n8n.
+Luz & Cena é um agente de IA Generativa capaz de consultar um catálogo de filmes em tempo real e responder a dúvidas dos usuários em linguagem natural, utilizando arquitetura RAG (Retrieval-Augmented Generation) no n8n.
 
 ---
 
