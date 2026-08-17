@@ -1,0 +1,183 @@
+{
+  "name": "desafio 1",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e40d7ee2-f4f2-4663-a20f-ffe1e1b0ef77",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "15DdAxCWZWINRHj8K69fsdNnxuP_wJN95LPAFgDmBAeY",
+          "mode": "list",
+          "cachedResultName": "Sinopses ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15DdAxCWZWINRHj8K69fsdNnxuP_wJN95LPAFgDmBAeY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Filmes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/15DdAxCWZWINRHj8K69fsdNnxuP_wJN95LPAFgDmBAeY/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        224,
+        0
+      ],
+      "id": "7ec5b431-2352-477e-80ce-509481070f51",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "wg7iX9hNzMZXCGT8",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "list",
+          "value": "vector_store_key"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        448,
+        0
+      ],
+      "id": "b7cfdc57-d7ea-433f-979c-9fb3db14fd1a",
+      "name": "Simple Vector Store"
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "=Título: {{ $json.titulo }}\nGênero: {{ $json.genero }}\nDuração: {{ $json.duracao_min }} minutos\nClassificação: {{ $json.classificacao }}\nSinopse: {{ $json.sinopse_original }}",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "id",
+                "value": "={{ $json.id }}"
+              },
+              {
+                "name": "titulo",
+                "value": "={{ $json.titulo }}"
+              },
+              {
+                "name": "genero",
+                "value": "={{ $json.genero }}"
+              },
+              {
+                "name": "classificacao",
+                "value": "={{ $json.classificacao }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        704,
+        128
+      ],
+      "id": "b0c85da5-c3e4-4938-987e-8cd001b64d35",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "modelName": "embed-multilingual-v3.0"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsCohere",
+      "typeVersion": 1,
+      "position": [
+        496,
+        208
+      ],
+      "id": "d6b27fe3-48d3-49c2-aeae-4c1a1e699799",
+      "name": "Embeddings Cohere",
+      "credentials": {
+        "cohereApi": {
+          "id": "R4MFnsVitaG041Uo",
+          "name": "Cohere account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Cohere": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "74237905-94e3-4bbf-8aa1-372a818d974a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "235e2a8326034062a5137714cc9afbc09245d62660343237f5956337b5e6ad55"
+  },
+  "nodeGroups": [],
+  "id": "3Qm3bDXmXcHcpy1u",
+  "tags": []
+}
