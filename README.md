@@ -114,9 +114,12 @@ O projeto é dividido em **dois workflows independentes** no n8n para otimizar o
 
 ---
 
-## 🚀 Aplicação em Produção (Deploy)
-O n8n está hospedado e rodando 24/7 na Oracle Cloud Instance:
-- **URL do n8n:** http://163.176.33.131:5678
+## 🚀 Deploy e Acesso ao Projeto
+
+A aplicação está rodando em uma instância da Oracle Cloud Infrastructure (OCI) via Docker.
+
+- **Painel de Workflows:** [Acessar n8n em Produção](http://163.176.33.131:5678/home/workflows)
+- **URL Base:** `http://163.176.33.131:5678/`
 
 ## 👤 Autor
 
