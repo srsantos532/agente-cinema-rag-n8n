@@ -114,6 +114,10 @@ O projeto é dividido em **dois workflows independentes** no n8n para otimizar o
 
 ---
 
+## 🚀 Aplicação em Produção (Deploy)
+O n8n está hospedado e rodando 24/7 na Oracle Cloud Instance:
+- **URL do n8n:** http://163.176.33.131:5678
+
 ## 👤 Autor
 
 Desenvolvido por **Sara Rosa dos Santos** como parte do desafio prático ONE IA.
