@@ -44,6 +44,7 @@ O projeto é dividido em dois workflows independentes no n8n para otimizar o pro
                                                           │
                                                           ▼
                                                 [ Memória de Sessão ]
+```
 
 ### Workflow de Ingestão (Pipeline de Dados)
 * Lê a base de dados (Google Sheets / CSV).
@@ -103,26 +104,25 @@ O projeto é dividido em dois workflows independentes no n8n para otimizar o pro
 
 ## 📸 Evidências e Demonstração
 
-
 #### 1. Workflows no n8n
-* **Pipeline de Ingestão (Google Sheets ──> Vector Store):**  
+* **Pipeline de Ingestão (Google Sheets ──> Vector Store):**
   ![Pipeline de Ingestão](./assets/workflow-ingestao.png)
 
-* **Agente de IA e Interface Telegram:**  
+* **Agente de IA e Interface Telegram:**
   ![Workflow do Agente no n8n](./assets/workflow-telegram.png)
 
 #### 2. Configuração dos Nós Principais
-* **Configuração do Default Data Loader:**  
+* **Configuração do Default Data Loader:**
   ![Data Loader](./assets/data-loader.png)
 
-* **Configuração do Telegram Trigger:**  
+* **Configuração do Telegram Trigger:**
   ![Telegram Trigger](./assets/telegram-trigger.png)
 
-* **Configuração do Simple Vector Store:**  
+* **Configuração do Simple Vector Store:**
   ![Vector Store](./assets/vector-store.png)
 
 #### 3. Teste de Funcionamento (Linguagem Natural)
-* **Atendimento em Tempo Real via Telegram (Luz&Cena):**  
+* **Atendimento em Tempo Real via Telegram (Luz&Cena):**
   ![Conversa no Telegram](./assets/teste-telegram.png)
 
 ---
@@ -131,8 +131,8 @@ O projeto é dividido em dois workflows independentes no n8n para otimizar o pro
 
 A aplicação está rodando em uma instância da Oracle Cloud Infrastructure (OCI) via Docker.
 
-- **Painel de Workflows:** [Acessar n8n em Produção](http://163.176.33.131:5678/home/workflows)
-- **URL Base:** `http://163.176.33.131:5678/`
+- **Painel de Workflows:** [Acessar n8n em Produção](http://163.176.33.131/home/workflows)
+- **URL Base:** `http://163.176.33.131/`
 
 ## 👤 Autor
 
@@ -140,4 +140,3 @@ Desenvolvido por **Sara Rosa dos Santos** como parte do desafio prático ONE IA.
 
 - **LinkedIn:** https://www.linkedin.com/in/sara-rosa-20969242a/
 - **GitHub:** https://github.com/srsantos532
-
