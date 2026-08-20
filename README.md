@@ -1,94 +1,103 @@
-# 🎬 Luz & Cena - Agente Inteligente de Recomendação de Filmes (RAG + n8n)
+# 🎬 Luz&Cena - Agente Inteligente de Recomendação de Filmes (RAG + n8n + Telegram)
 
-Luz & Cena é um agente de IA Generativa capaz de consultar um catálogo de filmes em tempo real e responder a dúvidas dos usuários em linguagem natural, utilizando arquitetura RAG (Retrieval-Augmented Generation) no n8n.
+**Luz&Cena** é um agente de IA Generativa capaz de consultar um catálogo de filmes em tempo real e responder a dúvidas dos usuários em linguagem natural via **Telegram**, utilizando arquitetura RAG (*Retrieval-Augmented Generation*) no n8n.
 
 ---
 
 ## 📌 Sumário
-- [Visão Geral](#-visão-geral)
-- [Arquitetura da Solução](#-arquitetura-da-solução)
-- [Tecnologias Utilizadas](#-tecnologias-utilizadas)
-- [Como Funciona](#-como-funciona)
-- [Como Executar o Projeto](#-como-executar-o-projeto)
-- [Evidências e Demonstração](#-evidências-e-demonstração)
-- [Autor](#-autor)
+
+* Visão Geral
+* Principais Funcionalidades
+* Arquitetura da Solução
+* Tecnologias Utilizadas
+* Como Executar o Projeto
+* Evidências e Demonstração
+* Deploy e Acesso ao Projeto
+* Autor
 
 ---
 
 ## 🚀 Visão Geral
 
-O projeto consiste em um sistema de atendimento autônomo focado em cinema. A partir de uma base de conhecimento estruturada (planilha/CSV contendo catálogo de filmes, gêneros, durações, classificações e sinopses), o agente utiliza busca semântica para encontrar os filmes mais adequados à solicitação do usuário e formular respostas amigáveis.
+O projeto consiste em um sistema de atendimento autônomo focado em cinema. A partir de uma base de conhecimento estruturada (planilha/CSV contendo catálogo enriquecido com títulos, gêneros, durações, preços, diretores, notas e sinopses), o agente **Luz&Cena** utiliza busca semântica para encontrar os filmes mais adequados à solicitação do usuário e formular respostas amigáveis.
 
-### 🎯 Principais Funcionalidades
-- **Busca Semântica:** Encontra filmes por gênero, tema, palavra-chave ou contexto, mesmo que a palavra exata não esteja no título.
-- **Consultas Detalhadas:** Responde sobre sinopses, duração, classificação indicativa e recomendações personalizadas.
-- **Memória Conversacional:** Mantém o contexto da conversa durante a sessão do usuário.
-- **Interface Web:** Chat público acessível via navegador para interação direta do cliente.
+---
+
+## 🎯 Principais Funcionalidades
+
+* **Busca Semântica Completa:** Encontra filmes por gênero, tema, palavra-chave ou contexto, retornando detalhes como preços de ingressos, duração, nota e sinopse.
+* **Orientação sobre Ingressos:** Informa sobre os valores dos ingressos e orienta o cliente sobre a necessidade de compra presencial na bilheteria do cinema.
+* **Memória Conversacional:** Mantém o contexto do diálogo durante toda a sessão do usuário.
+* **Atendimento Via Telegram:** Interface direta e acessível ao cliente final por meio de um bot autônomo.
 
 ---
 
 ## 🏗️ Arquitetura da Solução
 
-O projeto é dividido em **dois workflows independentes** no n8n para otimizar o processamento e a manutenção:
+O projeto é dividido em dois workflows independentes no n8n para otimizar o processamento e a manutenção:
 
+```text
 [ Planilha / CSV ] ──> [ Default Data Loader ] ──> [ Cohere Embeddings ] ──> [ Simple Vector Store ]
-│
-▼
-[ Usuário / Chat ] ──> [ Chat Trigger ] ──> [ AI Agent (Groq) ] <─────── [ Ferramenta de Busca ]
-│
-▼
-[ Memória de Sessão ]
+                                                                                   │
+                                                                                   ▼
+[ Usuário / Telegram ] ──> [ Telegram Trigger ] ──> [ AI Agent (Groq) ] <─────── [ Ferramenta de Busca ]
+                                                          │
+                                                          ▼
+                                                [ Memória de Sessão ]
 
-1. **Workflow de Ingestão (Pipeline de Dados):**
-   - Lê a base de dados (Google Sheets / CSV).
-   - Formata os atributos em texto contínuo via `Default Data Loader`.
-   - Vetoriza as informações usando **Cohere Embeddings**.
-   - Armazena as representações vetoriais no **Simple Vector Store** sob a chave `vector_store_key`.
+### Workflow de Ingestão (Pipeline de Dados)
+* Lê a base de dados (Google Sheets / CSV).
+* Formata os atributos e metadados enriquecidos (preço, nota, diretor, etc.) em texto contínuo via **Default Data Loader**.
+* Vetoriza as informações usando **Cohere Embeddings**.
+* Armazena as representações vetoriais no **Simple Vector Store**.
 
-2. **Workflow do Agente Inteligente (Interface & Atendimento):**
-   - Recebe as mensagens via **Chat Trigger**.
-   - Processa a intenção do usuário usando o LLM **Groq (Llama3/Groq)**.
-   - Consulta o **Simple Vector Store** via *Tool Calling* (RAG) quando necessário.
-   - Preserva o contexto da sessão usando **Simple Memory**.
+### Workflow do Agente Inteligente (Telegram & Atendimento)
+* Recebe e escuta as mensagens dos clientes via **Telegram Trigger**.
+* Processa a intenção do usuário usando o LLM **Groq (`openai/gpt-oss-120b`)** para otimização de resposta e controle de limites da API.
+* Consulta o **Simple Vector Store** via Tool Calling (RAG) para obter dados em tempo real.
+* Preserva o contexto da sessão usando **Simple Memory**.
+* Retorna a resposta formatada para o chat do Telegram do usuário.
 
 ---
 
 ## 🛠️ Tecnologias Utilizadas
 
-- **Orquestração de Automação:** [n8n](https://n8n.io/) (n8n Cloud)
-- **Modelo de Linguagem (LLM):** Groq (Chat Model)
-- **Modelo de Embeddings:** Cohere (`embed-english-v3.0` / `embed-multilingual-v3.0`)
-- **Banco de Dados Vetorial:** Simple Vector Store (LangChain/n8n)
-- **Base de Conhecimento:** Google Sheets / CSV
+* **Orquestração de Automação:** n8n (Deploy em nuvem via OCI)
+* **Canal de Comunicação:** Telegram Bot API (Luz&Cena)
+* **Modelo de Linguagem (LLM):** Groq (`openai/gpt-oss-120b`)
+* **Modelo de Embeddings:** Cohere (`embed-multilingual-v3.0` / `embed-english-v3.0`)
+* **Banco de Dados Vetorial:** Simple Vector Store (LangChain/n8n)
+* **Base de Conhecimento:** Google Sheets / CSV
 
 ---
 
 ## ⚙️ Como Executar o Projeto
 
 ### Pré-requisitos
-- Conta no [n8n Cloud](https://n8n.io/) (ou instância local do n8n).
-- Chave de API da **Groq**.
-- Chave de API da **Cohere**.
-- Acesso ao Google Sheets com a planilha de filmes.
+* Instância do n8n (Local ou OCI).
+* Chave de API da **Groq**.
+* Chave de API da **Cohere**.
+* Bot **Luz&Cena** criado no Telegram via `@BotFather` (Token de acesso).
+* Acesso ao Google Sheets/CSV com o catálogo de filmes.
 
 ### Passo a Passo
 
 1. **Importar os Workflows:**
-   - Faça o download dos arquivos JSON na pasta `workflows/` deste repositório.
-   - No n8n, crie um novo workflow e selecione **Import from File** para importar o fluxo de ingestão e o fluxo do agente.
+   * Baixe os arquivos `.json` da pasta `workflows/` do repositório.
+   * No n8n, crie um novo workflow e selecione **Import from File** para o fluxo de ingestão e para o fluxo do agente.
 
 2. **Configurar Credenciais:**
-   - Adicione suas credenciais da **Groq**, **Cohere** e **Google Sheets** no menu *Credentials* do n8n.
+   * Adicione suas credenciais do **Telegram Bot**, **Groq**, **Cohere** e **Google Sheets** no menu *Credentials* do n8n.
 
 3. **Executar a Ingestão de Dados:**
-   - Abra o **Workflow de Ingestão**.
-   - Clique em **Execute Workflow** para ler a planilha e salvar os vetores no `Simple Vector Store`.
+   * Abra o Workflow de Ingestão (*Default Data Loader* + *Simple Vector Store*).
+   * Clique em **Execute Workflow** para ler a planilha e popular a memória vetorial.
 
-4. **Publicar o Agente:**
-   - Abra o **Workflow do Chat**.
-   - Abra o nó *When chat message received* e ative a opção **Make Chat Publicly Available**.
-   - Clique no botão **Publish** no canto superior direito.
-   - Copie a URL pública para interagir com o agente no navegador.
+4. **Publicar o Bot no Telegram:**
+   * Abra o Workflow do Agente.
+   * Certifique-se de que o nó **Telegram Trigger** está configurado com as credenciais do bot **Luz&Cena**.
+   * Ative o botão **Publish** no canto superior direito para manter o fluxo ativo 24/7.
+   * Inicie uma conversa com o **Luz&Cena** no Telegram para interagir!
 
 ---
 
