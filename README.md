@@ -94,9 +94,9 @@ O projeto é dividido em **dois workflows independentes** no n8n para otimizar o
 
 ## 📸 Evidências e Demonstração
 
-### 1. Workflows no n8n
-* **Pipeline de Ingestão (Google Sheets ──> Vector Store):**
-  ![Workflow de Ingestão](./assets/workflow-ingestao.png)
+
+#### 1. Workflow do Agente no n8n (Telegram Integration)
+![Workflow do Agente no n8n](./assets/workflow-telegram.png)
 
 * **Agente de IA e Interface de Chat:**
   ![Workflow do Agente](./assets/workflow-agente.png)
@@ -108,9 +108,8 @@ O projeto é dividido em **dois workflows independentes** no n8n para otimizar o
 * **Configuração do Simple Vector Store:**
   ![Vector Store](./assets/vector-store.png)
 
-### 3. Teste de Funcionamento (Linguagem Natural)
-* **Atendimento em tempo real via Chat Público:**
-  ![Demonstração do Chat](./assets/chat-demo.png)
+#### 2. Atendimento em Tempo Real via Telegram (Luz&Cena)
+![Conversa no Telegram](./assets/teste-telegram.png)
 
 ---
 
