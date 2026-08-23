@@ -129,10 +129,15 @@ O projeto é dividido em dois workflows independentes no n8n para otimizar o pro
 
 ## 🚀 Deploy e Acesso ao Projeto
 
-A aplicação está rodando em uma instância da Oracle Cloud Infrastructure (OCI) via Docker.
+A aplicação está hospedada em uma instância da Oracle Cloud Infrastructure (OCI) via Docker com proxy reverso Caddy e SSL/TLS automático.
 
-- **Painel de Workflows:** [Acessar n8n em Produção](http://163.176.33.131/home/workflows)
-- **URL Base:** `http://163.176.33.131/`
+- **Painel de Workflows:** [Acessar n8n em Produção](https://luz-cena.duckdns.org/home/workflows)
+- **URL Base (Webhook):** `https://luz-cena.duckdns.org/`
+- **Atendimento ao Vivo (Telegram):** [LuzCenaBot](https://t.me/LuzCenaBot)
+
+### 🤖 Teste o Bot ao Vivo
+O agente está hospedado e ativo na nuvem. Você pode testar a interação em tempo real pelo Telegram:
+👉 **[Clique aqui para conversar com o LuzCenaBot](https://t.me/LuzCenaBot)**
 
 ## 👤 Autor
 
